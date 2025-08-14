@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Denomination.Pages.MainPage"
+             Shell.NavBarIsVisible="False"
+             xmlns:local="clr-namespace:Denomination.Behaviors"
+             Padding="10">
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="20">
+
+
+
+
+            <Grid ColumnDefinitions="*,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+                <!-- Header Labels -->
+                <Label Text="Coins" Grid.Row="0" Grid.Column="0" FontSize="Medium" HorizontalOptions="Center" />
+                <Label Text="Notes" Grid.Row="0" Grid.Column="2" FontSize="Medium" HorizontalOptions="Center" />
+
+                <!-- Vertical Line -->
+                <BoxView BackgroundColor="white" WidthRequest="1" Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" VerticalOptions="Fill" />
+
+
+
+                <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Spacing="10" Padding="10" HorizontalOptions="Start">
+                    <CollectionView ItemsSource="{Binding CoinViewModels}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*,*,*" RowDefinitions="*" ColumnSpacing="100" Padding="5">
+                                    <Label Text="{Binding Denomination}" VerticalOptions="Center" />
+                                    <Entry Grid.Column="1" Text="{Binding Quantity, Mode=TwoWay}" Placeholder="Enter quantity" FontSize="Small" WidthRequest="200" VerticalOptions="Center">
+                                        <Entry.Behaviors>
+                                            <local:NumericValidationBehavior />
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                    <Label Grid.Column="2" Text="{Binding Total}" FontSize="Small" WidthRequest="80" VerticalOptions="Center" HorizontalOptions="End" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </StackLayout>
+
+                <StackLayout Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Spacing="10" Padding="10" HorizontalOptions="Start">
+                    <CollectionView ItemsSource="{Binding NoteViewModels}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*,*,*" RowDefinitions="*" ColumnSpacing="100" Padding="5">
+                                    <Label Text="{Binding Denomination, StringFormat='{0}'}" VerticalOptions="Center" />
+                                    <Entry Grid.Column="1" Text="{Binding Quantity, Mode=TwoWay}" Placeholder="Enter quantity" FontSize="Small" WidthRequest="200" VerticalOptions="Center" >
+                                        <Entry.Behaviors>
+                                            <local:NumericValidationBehavior />
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                    <Label Grid.Column="2" Text="{Binding Total}" FontSize="Small" WidthRequest="80" VerticalOptions="Center" HorizontalOptions="End" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </StackLayout>
+
+
+            </Grid>
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
