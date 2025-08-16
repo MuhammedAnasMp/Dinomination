@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,10 +10,13 @@ namespace Denomination.ViewModels
 {
     public class NoteViewModel : INotifyPropertyChanged
     {
-        private decimal _denomination;
         private int _quantity;
+        private decimal _denomination;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public NoteViewModel(decimal denomination)
+        {
+            _denomination = denomination;
+        }
 
         public decimal Denomination
         {
@@ -20,7 +24,7 @@ namespace Denomination.ViewModels
             set
             {
                 _denomination = value;
-                OnPropertyChanged(nameof(Denomination));
+                OnPropertyChanged();
                 OnPropertyChanged(nameof(Total));
             }
         }
@@ -31,19 +35,15 @@ namespace Denomination.ViewModels
             set
             {
                 _quantity = value;
-                OnPropertyChanged(nameof(Quantity));
+                OnPropertyChanged();
                 OnPropertyChanged(nameof(Total));
             }
         }
 
         public decimal Total => Denomination * Quantity;
 
-        public NoteViewModel(decimal denomination)
-        {
-            Denomination = denomination;
-        }
-
-        protected virtual void OnPropertyChanged(string propertyName)
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
