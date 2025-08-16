@@ -5,72 +5,132 @@
              Shell.NavBarIsVisible="False"
              xmlns:local="clr-namespace:Denomination.Behaviors"
              Padding="10">
-    <ScrollView>
-        <VerticalStackLayout Spacing="20" Padding="20">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="20" Padding="20">
+                <Grid ColumnDefinitions="*,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+                    <!-- Header Labels -->
+                    <Label Text="Coins" Grid.Row="0" Grid.Column="0" FontSize="Medium" HorizontalOptions="Center" />
+                    <Label Text="Notes" Grid.Row="0" Grid.Column="2" FontSize="Medium" HorizontalOptions="Center" />
 
+                    <!-- Vertical Line -->
+                    <BoxView BackgroundColor="white" WidthRequest="1" Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" VerticalOptions="Fill" />
 
+                    <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Spacing="10" Padding="10" HorizontalOptions="Start">
+                        <CollectionView ItemsSource="{Binding CoinViewModels}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                            </CollectionView.ItemsLayout>
 
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="*,*,*" RowDefinitions="*" ColumnSpacing="100" Padding="5">
+                                        <Label Text="{Binding Denomination}" VerticalOptions="Center" />
+                                        <Entry Grid.Column="1" Text="{Binding Quantity, Mode=TwoWay}" Placeholder="Enter quantity" FontSize="Small" WidthRequest="200" VerticalOptions="Center">
+                                            <Entry.Behaviors>
+                                                <local:NumericValidationBehavior />
+                                            </Entry.Behaviors>
+                                        </Entry>
+                                        <Label Grid.Column="2" Text="{Binding Total}" FontSize="Small" WidthRequest="80" VerticalOptions="Center" HorizontalOptions="End" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
 
-            <Grid ColumnDefinitions="*,Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
-                <!-- Header Labels -->
-                <Label Text="Coins" Grid.Row="0" Grid.Column="0" FontSize="Medium" HorizontalOptions="Center" />
-                <Label Text="Notes" Grid.Row="0" Grid.Column="2" FontSize="Medium" HorizontalOptions="Center" />
+                    <StackLayout Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Spacing="10" Padding="10" HorizontalOptions="Start">
+                        <CollectionView ItemsSource="{Binding NoteViewModels}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                            </CollectionView.ItemsLayout>
 
-                <!-- Vertical Line -->
-                <BoxView BackgroundColor="white" WidthRequest="1" Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" VerticalOptions="Fill" />
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="*,*,*" RowDefinitions="*" ColumnSpacing="100" Padding="5">
+                                        <Label Text="{Binding Denomination, StringFormat='{0}'}" VerticalOptions="Center" />
+                                        <Entry Grid.Column="1" Text="{Binding Quantity, Mode=TwoWay}" Placeholder="Enter quantity" FontSize="Small" WidthRequest="200" VerticalOptions="Center">
+                                            <Entry.Behaviors>
+                                                <local:NumericValidationBehavior />
+                                            </Entry.Behaviors>
+                                        </Entry>
+                                        <Label Grid.Column="2" Text="{Binding Total}" FontSize="Small" WidthRequest="80" VerticalOptions="Center" HorizontalOptions="End" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+        <VerticalStackLayout Grid.Row="1" Spacing="10" Padding="0" BackgroundColor="{AppThemeBinding Light=#F5F7FA, Dark=#1C2526}">
+            <FlexLayout Direction="Row" 
+                Wrap="Wrap" 
+                JustifyContent="SpaceAround" 
+                AlignItems="Center" 
+                Padding="10">
+                <!-- Totals Section -->
+                <Label Text="{Binding CoinTotal, StringFormat='Coins: {0}'}" 
+               FontSize="16" 
+               FontAttributes="Bold" 
+               TextColor="{AppThemeBinding Light=#2D3436, Dark=#E0E0E0}" 
+               FontFamily="OpenSans-SemiBold"
+               FlexLayout.Grow="1" />
+                <Label Text="{Binding NoteTotal, StringFormat='Notes: {0}'}" 
+               FontSize="16" 
+               FontAttributes="Bold" 
+               TextColor="{AppThemeBinding Light=#2D3436, Dark=#E0E0E0}" 
+               FontFamily="OpenSans-SemiBold"
+               FlexLayout.Grow="1" />
+                <Label Text="{Binding GrandTotal, StringFormat='Total: {0}'}" 
+               FontSize="18" 
+               FontAttributes="Bold" 
+               TextColor="{AppThemeBinding Light=#0984E3, Dark=#4DA8FF}" 
+               FontFamily="OpenSans-Bold"
+               FlexLayout.Grow="1" />
 
-
-
-                <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Spacing="10" Padding="10" HorizontalOptions="Start">
-                    <CollectionView ItemsSource="{Binding CoinViewModels}">
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
-                        </CollectionView.ItemsLayout>
-
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid ColumnDefinitions="*,*,*" RowDefinitions="*" ColumnSpacing="100" Padding="5">
-                                    <Label Text="{Binding Denomination}" VerticalOptions="Center" />
-                                    <Entry Grid.Column="1" Text="{Binding Quantity, Mode=TwoWay}" Placeholder="Enter quantity" FontSize="Small" WidthRequest="200" VerticalOptions="Center">
-                                        <Entry.Behaviors>
-                                            <local:NumericValidationBehavior />
-                                        </Entry.Behaviors>
-                                    </Entry>
-                                    <Label Grid.Column="2" Text="{Binding Total}" FontSize="Small" WidthRequest="80" VerticalOptions="Center" HorizontalOptions="End" />
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-                </StackLayout>
-
-                <StackLayout Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Spacing="10" Padding="10" HorizontalOptions="Start">
-                    <CollectionView ItemsSource="{Binding NoteViewModels}">
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
-                        </CollectionView.ItemsLayout>
-
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid ColumnDefinitions="*,*,*" RowDefinitions="*" ColumnSpacing="100" Padding="5">
-                                    <Label Text="{Binding Denomination, StringFormat='{0}'}" VerticalOptions="Center" />
-                                    <Entry Grid.Column="1" Text="{Binding Quantity, Mode=TwoWay}" Placeholder="Enter quantity" FontSize="Small" WidthRequest="200" VerticalOptions="Center" >
-                                        <Entry.Behaviors>
-                                            <local:NumericValidationBehavior />
-                                        </Entry.Behaviors>
-                                    </Entry>
-                                    <Label Grid.Column="2" Text="{Binding Total}" FontSize="Small" WidthRequest="80" VerticalOptions="Center" HorizontalOptions="End" />
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-                </StackLayout>
-
-
-            </Grid>
-            <Button Text="Submit to API" Command="{Binding PostToApiCommand}" HorizontalOptions="Center" Margin="0,20,0,0" />
-
+                <!-- Buttons Section -->
+                <Button Text="Reset All" 
+                Command="{Binding ResetCommand}" 
+                WidthRequest="160" 
+                HeightRequest="48" 
+                CornerRadius="24" 
+                FontSize="16" 
+                FontAttributes="Bold" 
+                TextColor="{AppThemeBinding Light=#2D3436, Dark=#E0E0E0}" 
+                BackgroundColor="{AppThemeBinding Light=#E0E0E0, Dark=#4B5EAA}" 
+                Padding="10" 
+                BorderWidth="0"
+                FlexLayout.Grow="1"
+                Margin="5">
+                    <Button.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light=#B0C4DE, Dark=#2D3436}" 
+                        Offset="0,2" 
+                        Radius="8" 
+                        Opacity="0.3" />
+                    </Button.Shadow>
+                </Button>
+                <Button Text="Submit " 
+                Command="{Binding PostToApiCommand}" 
+                WidthRequest="160" 
+                HeightRequest="48" 
+                CornerRadius="24" 
+                FontSize="16" 
+                FontAttributes="Bold" 
+                TextColor="{AppThemeBinding Light=White, Dark=#E0E0E0}" 
+                BackgroundColor="{AppThemeBinding Light=#0984E3, Dark=#4DA8FF}" 
+                Padding="10" 
+                BorderWidth="0"
+                FlexLayout.Grow="1"
+                Margin="5">
+                    <Button.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light=#B0C4DE, Dark=#2D3436}" 
+                        Offset="0,2" 
+                        Radius="8" 
+                        Opacity="0.3" />
+                    </Button.Shadow>
+                </Button>
+            </FlexLayout>
         </VerticalStackLayout>
-    </ScrollView>
+
+    </Grid>
 </ContentPage>
