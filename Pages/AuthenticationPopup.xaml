@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+               x:Class="Denomination.AuthenticationPopup"
+               Color="#00000000" 
+    Size="350, 280">
+
+    <Border BackgroundColor="#1E1E1E"
+            Stroke="#333333"
+            StrokeThickness="1"
+            StrokeShape="RoundRectangle 10"
+            Padding="20">
+
+        <VerticalStackLayout Spacing="15">
+
+            <!-- Title -->
+            <Label Text="Manager Authentication"
+           FontSize="20"
+           FontAttributes="Bold"
+           TextColor="{AppThemeBinding Light=Black, Dark=White}"
+           HorizontalOptions="Center" />
+
+            <!-- Username -->
+            <Entry x:Name="UsernameEntry"
+           Placeholder="Enter Username"
+           PlaceholderColor="Gray"
+           TextColor="{AppThemeBinding Light=Black, Dark=White}"
+           FontSize="14"
+           BackgroundColor="{AppThemeBinding Light=White, Dark=#2D2D2D}" />
+
+            <!-- Password -->
+            <Entry x:Name="PasswordEntry"
+           Placeholder="Enter Password"
+           PlaceholderColor="Gray"
+           TextColor="{AppThemeBinding Light=Black, Dark=White}"
+           FontSize="14"
+           IsPassword="True"
+           BackgroundColor="{AppThemeBinding Light=White, Dark=#2D2D2D}" />
+
+            <!-- Buttons -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="OK"
+                Clicked="OnOkClicked"
+                WidthRequest="100" />
+                <Button Text="Cancel"
+                Clicked="OnCancelClicked"
+                WidthRequest="100" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Border>
+</toolkit:Popup>

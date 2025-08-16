@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using CommunityToolkit.Maui.Views;
+using Denomination;
+using Denomination.ViewModels;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Text.Json;
 using System.Windows.Input;
-using Denomination.ViewModels;
 
 public class CurrencyService : INotifyPropertyChanged
 {
@@ -154,7 +156,36 @@ public class CurrencyService : INotifyPropertyChanged
     }
 
     private async Task PostToApi()
+
     {
+        // Show single authentication popup
+        var popup = new AuthenticationPopup();
+        await Application.Current.MainPage.ShowPopupAsync(popup);
+
+        if (popup.IsCancelled || string.IsNullOrWhiteSpace(popup.Username) || string.IsNullOrWhiteSpace(popup.Password))
+        {
+            if (popup.IsCancelled)
+            {
+                // continue; // User cancelled the
+                // 
+               return; // Exit the method if cancelled
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Username and password cannot be empty.", "OK");
+            }
+
+            return;
+        }
+
+       
+        bool isAuthenticated = popup.Username == "1" && popup.Password == "1";
+
+        if (!isAuthenticated)
+        {
+            await Application.Current.MainPage.DisplayAlert("Error", "Authentication Failed: Invalid username or password.", "OK");
+            return;
+        }
         try
         {
             var dto = new DenominationDto
@@ -190,6 +221,7 @@ public class CurrencyService : INotifyPropertyChanged
             if (response.IsSuccessStatusCode)
             {
                 await Application.Current.MainPage.DisplayAlert("Success", "Data posted successfully!", "OK");
+                ResetQuantities();
             }
             else
             {

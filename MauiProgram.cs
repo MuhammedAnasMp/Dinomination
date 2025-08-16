@@ -3,6 +3,7 @@ using Denomination.Services;
 using Denomination.ViewModels;
 using Microsoft.Extensions.Logging;
 
+using CommunityToolkit.Maui;
 namespace Denomination
 {
     public static class MauiProgram
@@ -12,6 +13,7 @@ namespace Denomination
             var builder = MauiApp.CreateBuilder(); //This creates a builder for your .NET MAUI app.
             builder
                 .UseMauiApp<App>()   // Tells MAUI which class is your main App . (App.xaml and App.xaml.cs)
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");   //Registers fonts so you can use them in XAML and C# without having to specify full file paths. 
